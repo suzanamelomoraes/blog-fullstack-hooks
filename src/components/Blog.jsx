@@ -4,13 +4,13 @@ import AddPost from './AddPost';
 
 const Blog = () => {
   const [posts, setPosts] = useState([
-    { title: 'Post One', body: 'This is my first post', comment: 'Loved it!' },
-    { title: 'Post Two', body: 'This is my second post', comment: '' },
-    { title: 'Post Three', body: 'This is my third post', comment: '' },
+    { title: 'Post One', body: 'This is my first post' },
+    { title: 'Post Two', body: 'This is my second post' },
+    { title: 'Post Three', body: 'This is my third post' },
   ]);
 
-  const addPost = ({ title, body, comment }) => {
-    const newPosts = [...posts, { title, body, comment }];
+  const addPost = ({ title, body }) => {
+    const newPosts = [...posts, { title, body }];
     setPosts(newPosts);
   };
 
@@ -26,7 +26,6 @@ const Blog = () => {
       id={index}
       title={post.title}
       body={post.body}
-      comment={post.comment}
       removePost={removePost}
     />
   ));
