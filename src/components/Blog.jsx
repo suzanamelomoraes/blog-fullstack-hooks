@@ -9,19 +9,13 @@ const Blog = () => {
     { title: 'Post Three', body: 'This is my third post' },
   ]);
 
-  const addPost = (post) => {
-    const newPost = { title: post.title, body: post.body };
-    const newPosts = [...posts, { newPost }];
+  const addPost = ({title, body}) => {
+    const newPosts = [...posts, { title, body }];
     setPosts(newPosts);
   };
 
   const post = posts.map((post, index) => (
-    <Post
-      key={post.index}
-      id={post.index}
-      title={post.title}
-      body={post.body}
-    />
+    <Post key={index} id={index} title={post.title} body={post.body} />
   ));
 
   return (
