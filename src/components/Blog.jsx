@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import Post from './Post';
+import AddPost from './AddPost';
 
 const Blog = () => {
   const [posts, setPosts] = useState([
@@ -7,6 +8,12 @@ const Blog = () => {
     { title: 'Post Two', body: 'This is my second post' },
     { title: 'Post Three', body: 'This is my third post' },
   ]);
+
+  const addPost = (post) => {
+    const newPost = { title: post.title, body: post.body };
+    const newPosts = [...posts, { newPost }];
+    setPosts(newPosts);
+  };
 
   const post = posts.map((post, index) => (
     <Post
@@ -17,7 +24,12 @@ const Blog = () => {
     />
   ));
 
-  return <div>{post}</div>;
+  return (
+    <div>
+      {post}
+      <AddPost addPost={addPost} />
+    </div>
+  );
 };
 
 export default Blog;
