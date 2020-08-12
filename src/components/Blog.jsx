@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import Post from './Post';
 
 const Blog = () => {
   const [posts, setPosts] = useState([
@@ -6,7 +7,12 @@ const Blog = () => {
     { id: 2, title: 'Post Two', body: 'This is my second post' },
     { id: 3, title: 'Post Three', body: 'This is my third post' },
   ]);
-  return <div>Post</div>;
+
+  const post = posts.map((post) => (
+    <Post key={post.id} id={post.id} title={post.title} body={post.body} />
+  ));
+
+  return <div>{post}</div>;
 };
 
 export default Blog;
