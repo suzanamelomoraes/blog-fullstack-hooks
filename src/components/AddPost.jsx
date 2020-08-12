@@ -1,11 +1,11 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
 
-const AddPost = ({ addTodo }) => {
+const AddPost = ({ addPost }) => {
   const { register, handleSubmit, errors } = useForm();
 
-  const onSubmit = (data, e) => {
-    addTodo(data);
+  const onSubmit = (post, e) => {
+    addPost(post);
     e.target.reset();
   };
 
