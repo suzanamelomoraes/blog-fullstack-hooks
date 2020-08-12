@@ -14,6 +14,12 @@ const Blog = () => {
     setPosts(newPosts);
   };
 
+  const removePost = (id) => {
+    const newPosts = [...posts];
+    newPosts.splice(id, 1);
+    setPosts(newPosts);
+  };
+
   const post = posts.map((post, index) => (
     <Post
       key={index}
@@ -21,6 +27,7 @@ const Blog = () => {
       title={post.title}
       body={post.body}
       comment={post.comment}
+      removePost={removePost}
     />
   ));
 
