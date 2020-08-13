@@ -12,6 +12,7 @@ const Blog = () => {
     { title: 'Post Three', body: 'This is my third post' },
   ]);
 
+  const [form, setShowForm] = useState({ showForm: false });
 
   const addPost = ({ title, body }) => {
     const newPosts = [...posts, { title, body }];
@@ -24,6 +25,12 @@ const Blog = () => {
     setPosts(newPosts);
   };
 
+  const showAddPost = () => {
+    const updateFormStatus = { ...form };
+    updateFormStatus.showForm = true;
+    setShowForm(updateFormStatus);
+  };
+
   return (
     <div>
       <Router>
@@ -32,10 +39,15 @@ const Blog = () => {
           exact
           component={(props) => <BlogTitles {...props} posts={posts} />}
         />
-        <AddPost addPost={addPost} />
+
+        <button onClick={showAddPost}>Add post</button>
+        {form.showForm && <AddPost addPost={addPost} />}
+
         <Route
           path='/posts'
-          component={(props) => <Posts {...props} posts={posts} removePost={removePost} />}
+          component={(props) => (
+            <Posts {...props} posts={posts} removePost={removePost} />
+          )}
         />
 
         <Route path='/post/:id' component={Post} />
