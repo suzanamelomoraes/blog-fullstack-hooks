@@ -1,10 +1,11 @@
 import React from 'react';
+import {Link} from 'react-router-dom';
 
 const BlogTitles = ({ posts }) => {
   return (
     <div>
       {posts.map((post, index) => (
-        <h2 key={index}>{post.title}</h2>
+        <h2 key={index}> <Link to='/posts' >{post.title}</Link> </h2>
       ))}
     </div>
   );

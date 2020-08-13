@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Route } from 'react-router-dom';
 import Posts from './Posts';
 import AddPost from './AddPost';
 import BlogTitles from './BlogTitles';
+import Post from './Post';
 
 const Blog = () => {
   const [posts, setPosts] = useState([
@@ -10,6 +11,7 @@ const Blog = () => {
     { title: 'Post Two', body: 'This is my second post' },
     { title: 'Post Three', body: 'This is my third post' },
   ]);
+
 
   const addPost = ({ title, body }) => {
     const newPosts = [...posts, { title, body }];
@@ -24,9 +26,20 @@ const Blog = () => {
 
   return (
     <div>
-      <BlogTitles posts={posts} />
-      <Posts posts={posts} removePost={removePost} />
-      <AddPost addPost={addPost} />
+      <Router>
+        <Route
+          path='/'
+          exact
+          component={(props) => <BlogTitles {...props} posts={posts} />}
+        />
+        <AddPost addPost={addPost} />
+        <Route
+          path='/posts'
+          component={(props) => <Posts {...props} posts={posts} removePost={removePost} />}
+        />
+
+        <Route path='/post/:id' component={Post} />
+      </Router>
     </div>
   );
 };
