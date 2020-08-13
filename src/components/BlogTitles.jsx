@@ -5,7 +5,7 @@ const BlogTitles = ({ posts }) => {
   return (
     <div>
       {posts.map((post, index) => (
-        <h2 key={index}> <Link to='/posts' >{post.title}</Link> </h2>
+        <h2 key={index}> <Link to={`post/${index}`} >{post.title}</Link> </h2>
       ))}
     </div>
   );
