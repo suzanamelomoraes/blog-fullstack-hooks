@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import Post from './Post';
+import { BrowserRouter as Router, Route } from 'react-router-dom';
+import Posts from './Posts';
 import AddPost from './AddPost';
 import BlogTitles from './BlogTitles';
 
@@ -21,25 +22,10 @@ const Blog = () => {
     setPosts(newPosts);
   };
 
-  const post = posts.map((post, index) => (
-    <Post
-      key={index}
-      id={index}
-      title={post.title}
-      body={post.body}
-      removePost={removePost}
-    />
-  ));
-
-  const titles = posts.map((post, index) => (
-    <BlogTitles key={index} title={post.title} />
-  ));
-
   return (
     <div>
-      
-      {titles}
-      {post}
+      <BlogTitles posts={posts} />
+      <Posts posts={posts} removePost={removePost} />
       <AddPost addPost={addPost} />
     </div>
   );
