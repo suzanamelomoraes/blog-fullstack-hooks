@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import Post from './Post';
 import AddPost from './AddPost';
+import BlogTitles from './BlogTitles';
 
 const Blog = () => {
   const [posts, setPosts] = useState([
@@ -30,8 +31,14 @@ const Blog = () => {
     />
   ));
 
+  const titles = posts.map((post, index) => (
+    <BlogTitles key={index} title={post.title} />
+  ));
+
   return (
     <div>
+      
+      {titles}
       {post}
       <AddPost addPost={addPost} />
     </div>
