@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import AddComment from './AddComment';
+import Comment from './Comments'
 
 const Post = ({ id, title, body, removePost }) => {
   const [comments, setComments] = useState([
@@ -25,7 +26,7 @@ const Post = ({ id, title, body, removePost }) => {
 
   const showComments = comments.map(
     (eachComment, index) =>
-      eachComment.postId === id && <p key={index}> {eachComment.comment} </p>
+      eachComment.postId === id && <Comment key={index} comment={eachComment.comment} />
   );
 
   return (
