@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
-import Posts from './Posts';
 import AddPost from './AddPost';
 import BlogTitles from './BlogTitles';
 import Post from './Post';
@@ -8,7 +7,11 @@ import Axios from 'axios';
 
 const Blog = () => {
   useEffect(() => {
-    Axios.get('http://localhost:3002/posts').then((res) => setPosts(res.data));
+    Axios.get('http://localhost:3002/posts')
+      .then((res) => setPosts(res.data))
+      .catch((err) => {
+        console.log(err);
+      });
   }, []);
 
   const [posts, setPosts] = useState([]);
@@ -40,15 +43,7 @@ const Blog = () => {
         <button onClick={showAddPost}>Add post</button>
         {form.showForm && <AddPost addPost={addPost} />}
 
-        <Route
-          path='/posts'
-          exact
-          component={(props) => (
-            <Posts {...props} posts={posts} removePost={removePost} />
-          )}
-        />
-
-        <Route path='/post/:id' component={Post} />
+        <Route path='/posts/:id' removePost={removePost} component={Post} />
       </Router>
     </div>
   );
