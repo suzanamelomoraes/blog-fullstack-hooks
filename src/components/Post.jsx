@@ -1,43 +1,29 @@
-import React, { useState } from 'react';
-import AddComment from './AddComment';
-import Comment from './Comments'
+import React, { useState, useEffect } from 'react';
+import Comment from './Comments';
+import Axios from 'axios';
 
-const Post = ({ id, title, body, removePost }) => {
-  const [comments, setComments] = useState([
-    { comment: 'Love it', postId: 1 },
-    { comment: 'Amazing', postId: 1 },
-    { comment: 'Weel done', postId: 2 },
-  ]);
-  const [form, setShowForm] = useState({ showForm: false });
+const Post = ({ removePost, match }) => {
+  useEffect(() => {
+    Axios.get(`http://localhost:3002/posts/${match.params.id}`)
+      .then(
+        (res) => setPost(res.data[0])
+        // console.log(res.data[0])
+      )
+      .catch((err) => {
+        console.log(err);
+      });
+  }, [match.params.id]);
 
-  const addComment = ({ comment }) => {
-    const newComments = [...comments, { comment, postId: id }];
-    setComments(newComments);
-    const updateFormStatus = { ...form };
-    updateFormStatus.showForm = false;
-    setShowForm(updateFormStatus);
-  };
+  const [post, setPost] = useState({});
 
-  const showAddComment = () => {
-    const updateFormStatus = { ...form };
-    updateFormStatus.showForm = true;
-    setShowForm(updateFormStatus);
-  };
 
-  const showComments = comments.map(
-    (eachComment, index) =>
-      eachComment.postId === id && <Comment key={index} comment={eachComment.comment} />
-  );
 
   return (
     <div>
-      <h4>{title}</h4>
-      <p>{body}</p>
-      <button onClick={() => removePost(id)}>Delete post</button>
-      <button onClick={showAddComment}>Add comment</button>
-      {form.showForm && <AddComment addComment={addComment} />}
-
-      {showComments}
+      <h4>{post.title}</h4>
+      <p>{post.body}</p>
+      <button onClick={() => removePost(post.id)}>Delete post</button>
+    <Comment postId={post.id} />
     </div>
   );
 };
