@@ -1,13 +1,22 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import AddComment from './AddComment';
+import axios from 'axios';
 
 const Comments = ({ postId }) => {
-  const [comments, setComments] = useState([
-    { comment: 'Love it', postId: 1 },
-    { comment: 'Amazing', postId: 1 },
-    { comment: 'Weel done', postId: 2 },
-  ]);
+  useEffect(() => {
+    axios
+      .get(`http://localhost:3002/comments/${postId}`)
+      .then((res) => setComments(res.data))
+      .catch((err) => {
+        console.log(err);
+      });
+  }, [postId]);
+
+  const [comments, setComments] = useState([]);
   const [form, setShowForm] = useState({ showForm: false });
+
+  console.log('post id', postId);
+  console.log('comments', comments);
 
   const addComment = ({ comment }) => {
     const newComments = [...comments, { comment, postId }];
@@ -23,10 +32,9 @@ const Comments = ({ postId }) => {
     setShowForm(updateFormStatus);
   };
 
-  const showComments = comments.map(
-    (eachComment, index) =>
-      eachComment.postId === postId && <p key={index}>{eachComment.comment}</p>
-  );
+  const showComments = comments.map((eachComment, index) => (
+    <p key={index}>{eachComment.comment}</p>
+  ));
 
   return (
     <div>
