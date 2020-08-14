@@ -5,7 +5,7 @@ const BlogTitles = ({ posts }) => {
   const postTitles = posts.map((post) => (
     <h2 key={post.id}>
       {' '}
-      <Link to={`posts/${post.id}`}>{post.title}</Link>{' '}
+      <Link to={`/posts/${post.id}`}>{post.title}</Link>{' '}
     </h2>
   ));
 
