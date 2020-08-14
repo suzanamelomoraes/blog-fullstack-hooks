@@ -4,11 +4,12 @@ import Posts from './Posts';
 import AddPost from './AddPost';
 import BlogTitles from './BlogTitles';
 import Post from './Post';
+import Axios from 'axios';
 
 const Blog = () => {
-    useEffect(() => {
-        
-    })
+  useEffect(() => {
+    Axios.get('http://localhost:3002/posts').then((res) => setPosts(res.data));
+  }, []);
 
   const [posts, setPosts] = useState([]);
 
@@ -40,7 +41,8 @@ const Blog = () => {
         {form.showForm && <AddPost addPost={addPost} />}
 
         <Route
-          path='/posts' exact
+          path='/posts'
+          exact
           component={(props) => (
             <Posts {...props} posts={posts} removePost={removePost} />
           )}
