@@ -1,17 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import Comment from './Comments';
-import Axios from 'axios';
+import axios from 'axios';
 import { useParams } from 'react-router-dom';
 
 const Post = ({ removePost }) => {
   let { id } = useParams();
 
   useEffect(() => {
-    Axios.get(`http://localhost:3002/posts/${id}`)
-      .then(
-        (res) => setPost(res.data[0])
-        // console.log(res.data[0])
-      )
+    axios
+      .get(`http://localhost:3002/posts/${id}`)
+      .then((res) => setPost(res.data[0]))
       .catch((err) => {
         console.log(err);
       });
