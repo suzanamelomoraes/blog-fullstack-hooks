@@ -33,9 +33,15 @@ const Blog = () => {
   };
 
   const removePost = (id) => {
-    const newPosts = [...posts];
-    newPosts.splice(id, 1);
-    setPosts(newPosts);
+    axios
+      .delete('http://localhost:3002/comments', { data: { id: id } })
+      .then((res) =>
+        axios.delete('http://localhost:3002/posts', { data: { id: id } })
+      )
+      .then((res) => getPosts())
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   const showAddPost = () => {
@@ -52,7 +58,10 @@ const Blog = () => {
         <button onClick={showAddPost}>Add post</button>
         {form.showForm && <AddPost addPost={addPost} />}
 
-        <Route path='/posts/:id' removePost={removePost} component={Post} />
+        <Route
+          path='/posts/:id'
+          render={(props) => <Post {...props} removePost={removePost} />}
+        />
       </Router>
     </div>
   );

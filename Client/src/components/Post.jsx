@@ -21,7 +21,7 @@ const Post = ({ removePost }) => {
     <div>
       <h4>{post.title}</h4>
       <p>{post.body}</p>
-      <button onClick={() => removePost(post.id)}>Delete post</button>
+      <button onClick={() => removePost(id)}>Delete post</button>
       <Comment postId={id} />
     </div>
   );
