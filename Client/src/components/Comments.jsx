@@ -4,19 +4,20 @@ import axios from 'axios';
 
 const Comments = ({ postId }) => {
   useEffect(() => {
+    getComments();
+  }, [postId]);
+
+  const [comments, setComments] = useState([]);
+  const [form, setShowForm] = useState({ showForm: false });
+
+  const getComments = () => {
     axios
       .get(`http://localhost:3002/comments/${postId}`)
       .then((res) => setComments(res.data))
       .catch((err) => {
         console.log(err);
       });
-  }, [postId]);
-
-  const [comments, setComments] = useState([]);
-  const [form, setShowForm] = useState({ showForm: false });
-
-  console.log('post id', postId);
-  console.log('comments', comments);
+  };
 
   const addComment = ({ comment }) => {
     const newComments = [...comments, { comment, postId }];
