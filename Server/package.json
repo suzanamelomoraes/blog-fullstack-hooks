@@ -1,10 +1,15 @@
 {
-  "name": "blog-api",
+  "name": "blogs-api",
   "version": "1.0.0",
-  "description": "Backend for fullstack blog application with React Hooks, Express and Postgres",
-  "main": "app.js",
+  "private": true,
+  "description": "Blogs API",
+  "main": "index.js",
+  "engines": {
+    "node": "11.x"
+  },
   "scripts": {
-    "start": "node app.js",
+    "start": "node index.js",
+    "start:dev": "nodemon index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Suzana Melo Moraes",
@@ -15,5 +20,8 @@
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "pg": "^8.3.0"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.4"
   }
 }

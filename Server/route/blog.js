@@ -1,9 +1,9 @@
 const express = require('express');
 const router = express.Router();
-const { pool } = require('../database/config');
+const pool = require('../database/config');
 
 // GET all posts
-router.get('/posts', async (request, response) => {
+router.get('/posts', (request, response) => {
   pool.query('SELECT * FROM posts', (error, results) => {
     if (error) {
       throw error;
@@ -24,7 +24,7 @@ router.get('/posts/:id', async (request, response) => {
   });
 });
 
-// GET comments for a post
+// GET comments by post Id
 router.get('/comments/:id', async (request, response) => {
   const id = request.params.id;
 
@@ -57,10 +57,10 @@ router.post('/addPost', async (request, response) => {
 
 // POST a new comment
 router.post('/addComment', async (request, response) => {
-  const { post_id, comment } = request.body;
+  const { postId, comment } = request.body;
   pool.query(
     'INSERT INTO comments (post_id, comment, date_created) VALUES ($1, $2, Now())',
-    [post_id, comment],
+    [postId, comment],
     (error) => {
       if (error) {
         throw error;
