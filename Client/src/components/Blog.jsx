@@ -1,11 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
+import axios from 'axios';
+import { createBrowserHistory } from 'history';
 import AddPost from './AddPost';
 import BlogTitles from './BlogTitles';
 import Post from './Post';
-import axios from 'axios';
 
 const Blog = () => {
+  let history = createBrowserHistory();
+
   useEffect(() => {
     getPosts();
   }, []);
@@ -30,6 +33,10 @@ const Blog = () => {
       .catch((err) => {
         console.log(err);
       });
+
+    const updateFormStatus = { ...form };
+    updateFormStatus.showForm = false;
+    setShowForm(updateFormStatus);
   };
 
   const removePost = (id) => {
@@ -41,7 +48,8 @@ const Blog = () => {
       .then((res) => getPosts())
       .catch((err) => {
         console.log(err);
-      });
+      })
+      .then(() => setTimeout(() => history.replace('/'), 700));
   };
 
   const showAddPost = () => {
@@ -53,15 +61,25 @@ const Blog = () => {
   return (
     <div>
       <Router>
-        <BlogTitles posts={posts} />
+        <div id='sidebar'>
+          <Route
+            path='/'
+            render={(props) => (
+              <>
+                <BlogTitles posts={posts} />
 
-        <button onClick={showAddPost}>Add post</button>
-        {form.showForm && <AddPost addPost={addPost} />}
-
-        <Route
-          path='/posts/:id'
-          render={(props) => <Post {...props} removePost={removePost} />}
-        />
+                <button onClick={showAddPost}>Add post</button>
+                {form.showForm && <AddPost addPost={addPost} />}
+              </>
+            )}
+          />
+        </div>
+        <div id='posts'>
+          <Route
+            path='/posts/:id'
+            render={(props) => <Post {...props} removePost={removePost} />}
+          />
+        </div>
       </Router>
     </div>
   );
