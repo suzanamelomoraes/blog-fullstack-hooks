@@ -3,20 +3,27 @@ import { BrowserRouter as Router, Route } from 'react-router-dom';
 import AddPost from './AddPost';
 import BlogTitles from './BlogTitles';
 import Post from './Post';
-import Axios from 'axios';
+import axios from 'axios';
 
 const Blog = () => {
   useEffect(() => {
-    Axios.get('http://localhost:3002/posts')
-      .then((res) => setPosts(res.data))
-      .catch((err) => {
-        console.log(err);
-      });
+    getPostDatabase();
   }, []);
 
   const [posts, setPosts] = useState([]);
 
   const [form, setShowForm] = useState({ showForm: false });
+
+  const getPostDatabase = () => {
+    axios
+      .get('http://localhost:3002/posts')
+      .then((res) => setPosts(res.data))
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  
 
   const addPost = ({ title, body }) => {
     const newPosts = [...posts, { title, body }];
