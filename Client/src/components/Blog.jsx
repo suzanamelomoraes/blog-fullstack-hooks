@@ -7,14 +7,14 @@ import axios from 'axios';
 
 const Blog = () => {
   useEffect(() => {
-    getPostDatabase();
+    getPosts();
   }, []);
 
   const [posts, setPosts] = useState([]);
 
   const [form, setShowForm] = useState({ showForm: false });
 
-  const getPostDatabase = () => {
+  const getPosts = () => {
     axios
       .get('http://localhost:3002/posts')
       .then((res) => setPosts(res.data))
@@ -23,11 +23,13 @@ const Blog = () => {
       });
   };
 
-  
-
   const addPost = ({ title, body }) => {
-    const newPosts = [...posts, { title, body }];
-    setPosts(newPosts);
+    axios
+      .post('http://localhost:3002/posts', { title, body })
+      .then((res) => getPosts())
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   const removePost = (id) => {
