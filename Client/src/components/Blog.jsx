@@ -1,13 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { BrowserRouter as Router, Route } from 'react-router-dom';
+import { Route, useHistory } from 'react-router-dom';
 import axios from 'axios';
-import { createBrowserHistory } from 'history';
 import AddPost from './AddPost';
 import BlogTitles from './BlogTitles';
 import Post from './Post';
 
 const Blog = () => {
-  let history = createBrowserHistory();
+  const history = useHistory();
 
   useEffect(() => {
     getPosts();
@@ -60,27 +59,19 @@ const Blog = () => {
 
   return (
     <div>
-      <Router>
-        <div id='sidebar'>
-          <Route
-            path='/'
-            render={(props) => (
-              <>
-                <BlogTitles posts={posts} />
+      <div>
+        <Route path='/'>
+          <BlogTitles posts={posts} />
 
-                <button onClick={showAddPost}>Add post</button>
-                {form.showForm && <AddPost addPost={addPost} />}
-              </>
-            )}
-          />
-        </div>
-        <div id='posts'>
-          <Route
-            path='/posts/:id'
-            render={(props) => <Post {...props} removePost={removePost} />}
-          />
-        </div>
-      </Router>
+          <button onClick={showAddPost}>Add post</button>
+          {form.showForm && <AddPost addPost={addPost} />}
+        </Route>
+      </div>
+      <div>
+        <Route path='/posts/:id'>
+          <Post removePost={removePost} />
+        </Route>
+      </div>
     </div>
   );
 };
