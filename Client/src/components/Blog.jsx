@@ -27,7 +27,7 @@ const Blog = () => {
 
   const addPost = ({ title, body }) => {
     axios
-      .post('http://localhost:3002/posts', { title, body })
+      .post('http://localhost:3002/post', { title, body })
       .then((res) => getPosts())
       .catch((err) => {
         console.log(err);
@@ -42,7 +42,7 @@ const Blog = () => {
     axios
       .delete('http://localhost:3002/comments', { data: { id: id } })
       .then((res) =>
-        axios.delete('http://localhost:3002/posts', { data: { id: id } })
+        axios.delete('http://localhost:3002/post', { data: { id: id } })
       )
       .then((res) => getPosts())
       .catch((err) => {

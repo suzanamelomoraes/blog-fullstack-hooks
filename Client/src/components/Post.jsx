@@ -8,7 +8,7 @@ const Post = ({ removePost }) => {
 
   useEffect(() => {
     axios
-      .get(`http://localhost:3002/posts/${id}`)
+      .get(`http://localhost:3002/post/${id}`)
       .then((res) => setPost(res.data[0]))
       .catch((err) => {
         console.log(err);

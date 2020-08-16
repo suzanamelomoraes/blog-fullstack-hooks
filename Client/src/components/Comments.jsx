@@ -25,7 +25,7 @@ const Comments = ({ postId }) => {
 
   const addComment = ({ comment }) => {
     axios
-      .post('http://localhost:3002/comments', { postId, comment })
+      .post('http://localhost:3002/comment', { postId, comment })
       .then((res) => getComments())
       .catch((err) => {
         console.log(err);
@@ -44,12 +44,12 @@ const Comments = ({ postId }) => {
 
   const removeComment = (id) => {
     axios
-      .delete(`http://localhost:3002/comments/${id}`, { data: { id: id } })
+      .delete(`http://localhost:3002/comment/${id}`, { data: { id: id } })
       .then((res) => getComments())
       .catch((err) => {
         console.log(err);
       })
-      .then(() => setTimeout(() => history.replace(`/posts/${postId}`), 700));
+      .then(() => setTimeout(() => history.replace(`/`), 700));
   };
 
   const showComments = comments.map((eachComment, index) => (
