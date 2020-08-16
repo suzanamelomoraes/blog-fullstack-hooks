@@ -1,8 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import AddComment from './AddComment';
+import { useHistory } from 'react-router-dom';
 import axios from 'axios';
+import Comment from './Comment';
+import AddComment from './AddComment';
 
 const Comments = ({ postId }) => {
+  const history = useHistory();
+
   useEffect(() => {
     getComments();
   }, [postId]);
@@ -20,8 +24,13 @@ const Comments = ({ postId }) => {
   };
 
   const addComment = ({ comment }) => {
-    const newComments = [...comments, { comment, postId }];
-    setComments(newComments);
+    axios
+      .post('http://localhost:3002/comments', { postId, comment })
+      .then((res) => getComments())
+      .catch((err) => {
+        console.log(err);
+      });
+
     const updateFormStatus = { ...form };
     updateFormStatus.showForm = false;
     setShowForm(updateFormStatus);
@@ -33,8 +42,23 @@ const Comments = ({ postId }) => {
     setShowForm(updateFormStatus);
   };
 
+  const removeComment = (id) => {
+    axios
+      .delete(`http://localhost:3002/comments/${id}`, { data: { id: id } })
+      .then((res) => getComments())
+      .catch((err) => {
+        console.log(err);
+      })
+      .then(() => setTimeout(() => history.replace(`/posts/${postId}`), 700));
+  };
+
   const showComments = comments.map((eachComment, index) => (
-    <p key={index}>{eachComment.comment}</p>
+    <Comment
+      key={index}
+      id={eachComment.id}
+      comment={eachComment.comment}
+      removeComment={removeComment}
+    />
   ));
 
   return (
