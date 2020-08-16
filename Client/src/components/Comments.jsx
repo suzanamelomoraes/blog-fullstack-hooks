@@ -53,12 +53,7 @@ const Comments = ({ postId }) => {
   };
 
   const showComments = comments.map((eachComment, index) => (
-    <Comment
-      key={index}
-      id={eachComment.id}
-      comment={eachComment.comment}
-      removeComment={removeComment}
-    />
+    <Comment key={index} comment={eachComment} removeComment={removeComment} />
   ));
 
   return (
