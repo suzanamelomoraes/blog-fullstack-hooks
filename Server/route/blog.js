@@ -2,6 +2,8 @@ const express = require('express');
 const router = express.Router();
 const pool = require('../database/config');
 
+// * GETS
+
 // GET all posts
 router.get('/posts', (request, response) => {
   pool.query('SELECT * FROM posts', (error, results) => {
@@ -12,8 +14,8 @@ router.get('/posts', (request, response) => {
   });
 });
 
-// GET posts by id
-router.get('/posts/:id', async (request, response) => {
+// GET post by id
+router.get('/post/:id', async (request, response) => {
   const id = request.params.id;
 
   pool.query('SELECT * FROM posts WHERE id=$1', [id], (error, results) => {
@@ -40,8 +42,10 @@ router.get('/comments/:id', async (request, response) => {
   );
 });
 
+// * POSTS
+
 // POST a new post
-router.post('/addPost', async (request, response) => {
+router.post('/post', async (request, response) => {
   const { title, body } = request.body;
   pool.query(
     'INSERT INTO posts (title, body, date_created) VALUES ($1, $2, Now())',
@@ -56,11 +60,11 @@ router.post('/addPost', async (request, response) => {
 });
 
 // POST a new comment
-router.post('/addComment', async (request, response) => {
-  const { postId, comment } = request.body;
+router.post('/comment', async (request, response) => {
+  const { postId: post_id, comment } = request.body;
   pool.query(
     'INSERT INTO comments (post_id, comment, date_created) VALUES ($1, $2, Now())',
-    [postId, comment],
+    [post_id, comment],
     (error) => {
       if (error) {
         throw error;
@@ -70,6 +74,49 @@ router.post('/addComment', async (request, response) => {
         .json({ status: 'success', message: 'Comment added.' });
     }
   );
+});
+
+// * DELETES
+
+// DELETE a post
+router.delete('/post', async (request, response) => {
+  const id = request.body.id;
+  pool.query('DELETE FROM posts WHERE id = $1', [id], (error) => {
+    if (error) {
+      throw error;
+    }
+    response
+      .status(204)
+      .json({ status: 'success', message: 'Post deleted successfully.' });
+  });
+});
+
+// DELETE comments by post_id - when a post is deleted
+router.delete('/comments', async (request, response) => {
+  const id = request.body.id;
+  console.log('imhere postId: ', id);
+  pool.query('DELETE FROM comments WHERE post_id = $1', [id], (error) => {
+    if (error) {
+      throw error;
+    }
+    response
+      .status(204)
+      .json({ status: 'success', message: 'Comment deleted successfully.' });
+  });
+});
+
+// DELETE a comment by id
+router.delete('/comment/:id', async (request, response) => {
+  const id = request.body.id;
+  console.log('imhere comment: ', id);
+  pool.query('DELETE FROM comments WHERE id = $1', [id], (error) => {
+    if (error) {
+      throw error;
+    }
+    response
+      .status(204)
+      .json({ status: 'success', message: 'Comment deleted successfully.' });
+  });
 });
 
 module.exports = router;
