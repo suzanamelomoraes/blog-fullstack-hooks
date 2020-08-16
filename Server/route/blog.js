@@ -94,7 +94,6 @@ router.delete('/post', async (request, response) => {
 // DELETE comments by post_id - when a post is deleted
 router.delete('/comments', async (request, response) => {
   const id = request.body.id;
-  console.log('imhere postId: ', id);
   pool.query('DELETE FROM comments WHERE post_id = $1', [id], (error) => {
     if (error) {
       throw error;
@@ -108,7 +107,6 @@ router.delete('/comments', async (request, response) => {
 // DELETE a comment by id
 router.delete('/comment/:id', async (request, response) => {
   const id = request.body.id;
-  console.log('imhere comment: ', id);
   pool.query('DELETE FROM comments WHERE id = $1', [id], (error) => {
     if (error) {
       throw error;
