@@ -1,10 +1,10 @@
 import React from 'react';
 
-const Comment = ({ id, comment, removeComment }) => {
+const Comment = ({ comment, removeComment }) => {
   return (
     <div>
-      {comment}
-      <button onClick={() => removeComment(id)}>Delete comment</button>
+      {comment.comment}
+      <button onClick={() => removeComment(comment.id)}>Delete comment</button>
     </div>
   );
 };
