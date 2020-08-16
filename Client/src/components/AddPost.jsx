@@ -23,7 +23,7 @@ const AddPost = ({ addPost }) => {
         </div>
         <div>
           <label htmlFor='Body'>Body</label>
-          <input
+          <textarea
             name='body'
             placeholder='Tell your thoughts...'
             ref={register({ required: true })}
