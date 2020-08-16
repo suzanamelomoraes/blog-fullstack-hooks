@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Route, useHistory } from 'react-router-dom';
+import { Modal, Button } from '@material-ui/core';
 import axios from 'axios';
 import AddPost from './AddPost';
 import BlogTitles from './BlogTitles';
@@ -14,7 +15,7 @@ const Blog = () => {
 
   const [posts, setPosts] = useState([]);
 
-  const [form, setShowForm] = useState({ showForm: false });
+  const [showForm, setShowForm] = useState(false);
 
   const getPosts = () => {
     axios
@@ -33,9 +34,7 @@ const Blog = () => {
         console.log(err);
       });
 
-    const updateFormStatus = { ...form };
-    updateFormStatus.showForm = false;
-    setShowForm(updateFormStatus);
+    closeAddPost();
   };
 
   const removePost = (id) => {
@@ -52,9 +51,11 @@ const Blog = () => {
   };
 
   const showAddPost = () => {
-    const updateFormStatus = { ...form };
-    updateFormStatus.showForm = true;
-    setShowForm(updateFormStatus);
+    setShowForm(true);
+  };
+
+  const closeAddPost = () => {
+    setShowForm(false);
   };
 
   return (
@@ -63,9 +64,13 @@ const Blog = () => {
         <Route path='/'>
           <BlogTitles posts={posts} />
 
-          <button onClick={showAddPost}>Add post</button>
-          {form.showForm && <AddPost addPost={addPost} />}
+          <Button variant='contained' color='primary' onClick={showAddPost}>
+            Add post
+          </Button>
         </Route>
+        <Modal open={showForm} onClose={closeAddPost}>
+          <AddPost addPost={addPost} />
+        </Modal>
       </div>
       <div>
         <Route path='/posts/:id'>
