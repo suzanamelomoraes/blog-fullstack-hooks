@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import Comment from './Comments';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
+import moment from 'moment';
 
 const Post = ({ removePost }) => {
   let { id } = useParams();
@@ -16,10 +17,12 @@ const Post = ({ removePost }) => {
   }, [id]);
 
   const [post, setPost] = useState({});
+  console.log('post', post);
 
   return (
     <div>
       <h4>{post.title}</h4>
+      <p>{moment(post.date_created).format('MMM Do YY')}</p>
       <p>{post.body}</p>
       <button onClick={() => removePost(id)}>Delete post</button>
       <Comment postId={id} />
