@@ -1,7 +1,5 @@
 import React from 'react';
-import { useForm } from 'react-hook-form';
-import { ErrorMessage } from '@hookform/error-message';
-
+import { useForm, Controller } from 'react-hook-form';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
@@ -11,14 +9,19 @@ import Container from '@material-ui/core/Container';
 
 const useStyles = makeStyles((theme) => ({
   paper: {
+    position: 'absolute',
+    backgroundColor: theme.palette.background.paper,
+    boxShadow: theme.shadows[5],
+    width: 400,
+    border: '2px solid #000',
+    borderRadius: 5,
     marginTop: theme.spacing(8),
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
   },
-
   form: {
-    width: '100%', // Fix IE 11 issue.
+    width: '90%',
     marginTop: theme.spacing(1),
   },
   submit: {
@@ -27,7 +30,9 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const AddPost = ({ addPost }) => {
-  const { register, handleSubmit, errors } = useForm();
+  const { register, handleSubmit, errors, control } = useForm({
+    mode: 'all',
+  });
   const classes = useStyles();
 
   const onSubmit = (post, e) => {
@@ -37,104 +42,56 @@ const AddPost = ({ addPost }) => {
 
   return (
     <div>
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <div>
-          <label htmlFor='title'>Title</label>
-          <input
-            name='title'
-            placeholder='Add your title'
-            ref={register({
-              required: 'Title is required.',
-              minLength: {
-                value: 2,
-                message: 'Title must exceed 2 characters',
-              },
-              maxLength: {
-                value: 30,
-                message: 'Your title cannot exceed 30 characters',
-              },
-            })}
-          />
-          <ErrorMessage
-            errors={errors}
-            name='title'
-            render={({ messages }) => {
-              console.log('messages', messages);
-              return messages
-                ? Object.entries(messages).map(([type, message]) => (
-                    <p key={type}>{message}</p>
-                  ))
-                : null;
-            }}
-          />
-        </div>
-        <div>
-          <label htmlFor='Body'>Body</label>
-          <textarea
-            name='body'
-            placeholder='Tell your thoughts...'
-            ref={register({
-              required: 'Title is required.',
-              minLength: {
-                value: 10,
-                message: 'Title must exceed 10 characters',
-              },
-              maxLength: {
-                value: 400,
-                message: 'Your title cannot exceed 400 characters',
-              },
-            })}
-          />
-
-          <ErrorMessage
-            errors={errors}
-            name='body'
-            render={({ messages }) => {
-              console.log('messages', messages);
-              return messages
-                ? Object.entries(messages).map(([type, message]) => (
-                    <p key={type}>{message}</p>
-                  ))
-                : null;
-            }}
-          />
-        </div>
-
-        <input type='submit' />
-      </form>
-
       <Container component='main' maxWidth='xs'>
         <CssBaseline />
         <div className={classes.paper}>
           <Typography component='h1' variant='h5'>
             Add a post
           </Typography>
-          <form className={classes.form} noValidate>
-            <TextField
+          <form className={classes.form} onSubmit={handleSubmit(onSubmit)}>
+            <Controller
+              as={TextField}
+              control={control}
               variant='outlined'
               margin='normal'
               required
               fullWidth
-              id='email'
-              label='Email Address'
-              name='email'
+              id='title'
+              label='Title'
+              name='title'
               autoFocus
+              inputProps={{ minLength: 2, maxLength: 30 }}
+              innerRef={register({
+                required: true,
+              })}
+              error={errors.title}
+              defaultValue=''
             />
-            <TextField
+
+            <Controller
+              as={TextField}
+              control={control}
               variant='outlined'
               margin='normal'
+              multiline
+              rows={5}
               required
+              inputProps={{ minLength: 2, maxLength: 400 }}
               fullWidth
-              name='password'
-              label='Password'
-              type='password'
-              id='password'
+              id='body'
+              label='Post body'
+              name='body'
+              innerRef={register({
+                required: true,
+              })}
+              defaultValue=''
             />
 
             <Button
               type='submit'
               fullWidth
               variant='contained'
+              color='primary'
               className={classes.submit}
             >
               Add post
