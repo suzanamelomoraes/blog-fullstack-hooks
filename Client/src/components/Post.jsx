@@ -38,6 +38,7 @@ const useStyles = makeStyles((theme) => ({
   root: {
     display: 'flex',
     flexDirection: 'column',
+    marginTop: 3,
   },
   title: {
     fontSize: 14,
@@ -59,15 +60,19 @@ const Post = ({ removePost }) => {
   let { id } = useParams();
 
   useEffect(() => {
+    getPost(id);
+  }, [id]);
+
+  const [post, setPost] = useState({});
+
+  const getPost = (id) => {
     axios
       .get(`http://localhost:3002/post/${id}`)
       .then((res) => setPost(res.data[0]))
       .catch((err) => {
         console.log(err);
       });
-  }, [id]);
-
-  const [post, setPost] = useState({});
+  };
 
   return (
     <div>
