@@ -9,14 +9,15 @@ const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
   },
-
   title: {
     flexGrow: 1,
+    margin: 10,
+    fontFamily: ['"Lobster"', 'cursive', '"Roboto Slab"', 'serif'].join(','),
   },
-
   link: {
     textDecoration: 'none',
     color: 'white',
+    textAlign: 'center',
   },
 }));
 
@@ -26,7 +27,7 @@ const Header = () => {
     <div className={classes.root}>
       <AppBar position='static'>
         <Toolbar>
-          <Typography variant='h3' className={classes.title}>
+          <Typography variant='h3' align='center' className={classes.title}>
             My Blog
           </Typography>
         </Toolbar>
