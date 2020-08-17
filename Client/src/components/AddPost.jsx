@@ -112,6 +112,7 @@ const AddPost = ({ addPost }) => {
               innerRef={register({
                 required: true,
               })}
+              error={errors.body}
               defaultValue=''
             />
 
