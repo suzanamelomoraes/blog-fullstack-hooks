@@ -17,7 +17,6 @@ router.get('/posts', (request, response) => {
 // GET post by id
 router.get('/post/:id', async (request, response) => {
   const id = request.params.id;
-
   pool.query('SELECT * FROM posts WHERE id=$1', [id], (error, results) => {
     if (error) {
       throw error;
@@ -62,6 +61,7 @@ router.post('/post', async (request, response) => {
 // POST a new comment
 router.post('/comment', async (request, response) => {
   const { postId: post_id, comment } = request.body;
+
   pool.query(
     'INSERT INTO comments (post_id, comment, date_created) VALUES ($1, $2, Now())',
     [post_id, comment],
