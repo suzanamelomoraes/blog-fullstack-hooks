@@ -4,8 +4,36 @@ import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
-import { makeStyles } from '@material-ui/core/styles';
+import { makeStyles, withStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
+
+const FormButton = withStyles({
+  root: {
+    boxShadow: 'none',
+    textTransform: 'none',
+    fontSize: 16,
+    padding: '6px 12px',
+    lineHeight: 1.5,
+    fontFamily: [
+      '-apple-system',
+      'BlinkMacSystemFont',
+      '"Segoe UI"',
+      'Roboto',
+      '"Helvetica Neue"',
+      'Arial',
+      'sans-serif',
+      '"Apple Color Emoji"',
+      '"Segoe UI Emoji"',
+      '"Segoe UI Symbol"',
+    ].join(','),
+    '&:hover': {
+      boxShadow: 'none',
+    },
+    '&:active': {
+      boxShadow: 'none',
+    },
+  },
+})(Button);
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -87,15 +115,15 @@ const AddPost = ({ addPost }) => {
               defaultValue=''
             />
 
-            <Button
+            <FormButton
               type='submit'
-              fullWidth
               variant='contained'
               color='primary'
+              fullWidth
               className={classes.submit}
             >
               Add post
-            </Button>
+            </FormButton>
           </form>
         </div>
       </Container>
