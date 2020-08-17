@@ -38,7 +38,7 @@ const useStyles = makeStyles((theme) => ({
   root: {
     display: 'flex',
     flexDirection: 'column',
-    marginTop: 3,
+    marginTop: 1,
   },
   title: {
     fontSize: 14,
