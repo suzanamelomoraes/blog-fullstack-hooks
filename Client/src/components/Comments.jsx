@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
+import { Button } from '@material-ui/core';
 import axios from 'axios';
 import Comment from './Comment';
 import AddComment from './AddComment';
@@ -12,7 +13,7 @@ const Comments = ({ postId }) => {
   }, [postId]);
 
   const [comments, setComments] = useState([]);
-  const [form, setShowForm] = useState({ showForm: false });
+  const [showForm, setShowForm] = useState(false);
 
   const getComments = () => {
     axios
@@ -31,15 +32,11 @@ const Comments = ({ postId }) => {
         console.log(err);
       });
 
-    const updateFormStatus = { ...form };
-    updateFormStatus.showForm = false;
-    setShowForm(updateFormStatus);
+    setShowForm(false);
   };
 
   const showAddComment = () => {
-    const updateFormStatus = { ...form };
-    updateFormStatus.showForm = true;
-    setShowForm(updateFormStatus);
+    setShowForm(true);
   };
 
   const removeComment = (id) => {
@@ -58,8 +55,8 @@ const Comments = ({ postId }) => {
 
   return (
     <div>
-      <button onClick={showAddComment}>Add comment</button>
-      {form.showForm && <AddComment addComment={addComment} />}
+      <Button color="primary" onClick={showAddComment}>Add comment</Button>
+      {showForm && <AddComment addComment={addComment} />}
 
       {showComments}
     </div>

@@ -1,4 +1,5 @@
 import React from 'react';
+import { Button } from '@material-ui/core';
 import moment from 'moment';
 
 const Comment = ({ comment, removeComment }) => {
@@ -6,7 +7,9 @@ const Comment = ({ comment, removeComment }) => {
     <div>
       {comment.comment}
       <p>{moment(comment.date_created).format('MMM Do YY')}</p>
-      <button onClick={() => removeComment(comment.id)}>Delete comment</button>
+      <Button color='secondary' onClick={() => removeComment(comment.id)}>
+        Delete comment
+      </Button>
     </div>
   );
 };
