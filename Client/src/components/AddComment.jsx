@@ -4,8 +4,37 @@ import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
-import { makeStyles } from '@material-ui/core/styles';
+import { makeStyles, withStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
+import { Grid } from '@material-ui/core';
+
+const FormButton = withStyles({
+  root: {
+    boxShadow: 'none',
+    textTransform: 'none',
+    fontSize: 16,
+    padding: '6px 12px',
+    lineHeight: 1.5,
+    fontFamily: [
+      '-apple-system',
+      'BlinkMacSystemFont',
+      '"Segoe UI"',
+      'Roboto',
+      '"Helvetica Neue"',
+      'Arial',
+      'sans-serif',
+      '"Apple Color Emoji"',
+      '"Segoe UI Emoji"',
+      '"Segoe UI Symbol"',
+    ].join(','),
+    '&:hover': {
+      boxShadow: 'none',
+    },
+    '&:active': {
+      boxShadow: 'none',
+    },
+  },
+})(Button);
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -19,11 +48,11 @@ const useStyles = makeStyles((theme) => ({
     marginTop: theme.spacing(1),
   },
   submit: {
-    margin: theme.spacing(3, 0, 2),
+    margin: theme.spacing(3, 2),
   },
 }));
 
-const AddComment = ({ addComment }) => {
+const AddComment = ({ addComment, setShowForm }) => {
   const { register, handleSubmit, errors, control } = useForm({
     mode: 'all',
   });
@@ -63,16 +92,25 @@ const AddComment = ({ addComment }) => {
               error={errors.title}
               defaultValue=''
             />
+            
+              <FormButton
+                type='submit'
+                variant='contained'
+                color='primary'
+                className={classes.submit}
+              >
+                Add comment
+              </FormButton>
 
-            <Button
-              type='submit'
-              fullWidth
-              variant='contained'
-              color='primary'
-              className={classes.submit}
-            >
-              Add comment
-            </Button>
+              <FormButton
+                variant='contained'
+                color='secondary'
+                className={classes.submit}
+                onClick={() => setShowForm(false)}
+              >
+                Cancel
+              </FormButton>
+            
           </form>
         </div>
       </Container>
